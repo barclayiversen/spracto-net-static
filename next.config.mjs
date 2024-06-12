@@ -9,7 +9,7 @@ const nextConfig = {
     },
   },
   images: {
-    remotePatterns: ["storage.googleapis.com"],
+    domains: ["storage.googleapis.com"],
   },
 };
 
