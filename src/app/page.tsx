@@ -11,11 +11,7 @@ export default function Home() {
       <Hero />
       <About />
       <Divider />
-      <Show
-        src="https://storage.googleapis.com/spracto-net-images/UpcomingShow/juush.JPG"
-        alt="upcoming show!"
-        buttonText="RSVP for free entry before 1030"
-      />
+      <Show />
       <Divider />
       <Releases />
     </>

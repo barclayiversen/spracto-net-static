@@ -1,15 +1,12 @@
 import React from "react";
 import Image from "next/image";
-const Show: React.FC<{
-  src: string;
-  alt: string;
-  buttonText: string;
-}> = ({ src, alt, buttonText }) => {
+
+const Show: React.FC = () => {
   return (
     <div className="text-center p-8 ">
       <Image
-        src={src}
-        alt={alt}
+        src="https://storage.googleapis.com/spracto-net-images/UpcomingShow/juush.JPG"
+        alt="Upcoming Show!"
         className="mx-auto mb-4 rounded-3xl max-w-full sm:max-w-xxl"
       />
       <a>
@@ -17,7 +14,7 @@ const Show: React.FC<{
           // onClick={handleButtonClick}
           className="bg-gray-500 text-white py-2 px-4 rounded-full"
         >
-          {buttonText}
+          RSVP for free entry before 1030
         </button>
       </a>
     </div>
