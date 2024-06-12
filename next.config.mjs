@@ -8,6 +8,9 @@ const nextConfig = {
       fullUrl: true,
     },
   },
+  images: {
+    remotePatterns: ["storage.googleapis.com"],
+  },
 };
 
 export default nextConfig;

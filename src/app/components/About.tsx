@@ -5,7 +5,7 @@ const About: React.FC = () => {
         Rootin&apos; Tootin&apos; Troubleshootin&apos;!
       </h1>
       <p className="mt-4 text-lg">
-        Spratzo is just a bro tryin&apos; to be a guy, man!
+        Spracto is just a bro tryin&apos; to be a guy, man!
       </p>
     </div>
   );
