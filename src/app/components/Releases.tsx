@@ -1,6 +1,6 @@
 import React from "react";
 import Divider from "./Divider";
-
+import Image from "next/image";
 const Releases: React.FC = () => {
   return (
     <div className="text-center p-4">
@@ -48,7 +48,7 @@ const Releases: React.FC = () => {
 
         {/* Album Art for Next Release */}
         <div className="mt-8">
-          <img
+          <Image
             src="https://storage.googleapis.com/spracto-net-images/UpcomingRelease/top%20back.png"
             alt="Album Art for Next Release"
             className="mx-auto rounded-lg p-4 sm:p-8"

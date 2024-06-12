@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import Link from "next/link";
 import {
@@ -58,7 +59,7 @@ const Header: React.FC = () => {
       >
         <div className="flex items-center">
           <Link href="/">
-            <img src="/logo.png" alt="My Logo" className="h-12 w-auto" />
+            <Image src="/logo.png" alt="My Logo" className="h-12 w-auto" />
           </Link>
         </div>
         <div className="hidden md:flex space-x-4">
@@ -92,7 +93,7 @@ const Header: React.FC = () => {
       >
         <div className="absolute top-4 left-4">
           <Link href="/">
-            <img src="/logo.png" alt="My Logo" className="h-12 w-auto" />
+            <Image src="/logo.png" alt="My Logo" className="h-12 w-auto" />
           </Link>
         </div>
         <button

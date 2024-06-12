@@ -1,5 +1,5 @@
 import React from "react";
-
+import Image from "next/image";
 const Show: React.FC<{
   src: string;
   alt: string;
@@ -7,7 +7,7 @@ const Show: React.FC<{
 }> = ({ src, alt, buttonText }) => {
   return (
     <div className="text-center p-8 ">
-      <img
+      <Image
         src={src}
         alt={alt}
         className="mx-auto mb-4 rounded-3xl max-w-full sm:max-w-xxl"
