@@ -4,6 +4,8 @@ import Divider from "./components/Divider";
 import About from "./components/About";
 import Show from "./components/Show";
 import Releases from "./components/Releases";
+import Footer from "./components/Footer";
+import PhotoCarouselServer from "./components/PhotoLoader";
 export default function Home() {
   return (
     <>
@@ -11,9 +13,12 @@ export default function Home() {
       <Hero />
       <About />
       <Divider />
-      <Show />
-      <Divider />
+      {/* <Show /> */}
+      {/* <Divider /> */}
       <Releases />
+      <Divider />
+      <PhotoCarouselServer />
+      <Footer />
     </>
   );
 }
