@@ -1,22 +1,34 @@
 import React from "react";
 import Divider from "./Divider";
 import Image from "next/image";
+import { Archivo_Black } from "next/font/google";
+
+const play = Archivo_Black({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 const Releases: React.FC = () => {
   return (
     <div className="text-center p-4">
       {/* Wrapper for centered content */}
       <div className="max-w-3xl mx-auto">
         {/* SoundCloud Iframe */}
-        <div className="mb-8">
-          <iframe
-            width="100%"
-            height="800"
-            scrolling="no"
-            frameBorder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1732888257&color=%235bff00&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
-            className="mx-auto sm:h-600 md:h-900"
-          ></iframe>
+        <h2 className={`${play.className} text-3xl mb-4`}>Featured Track:</h2>
+        <div className="">
+          <div
+            className="relative overflow-hidden"
+            style={{ paddingTop: "96.25%" }}
+          >
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              scrolling="no"
+              frameBorder="no"
+              allow="autoplay"
+              src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1732888257&color=%235bff00&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
+            ></iframe>
+          </div>
           <div
             style={{
               fontSize: "10px",
@@ -42,18 +54,25 @@ const Releases: React.FC = () => {
             </button>
           </div>
         </div>
-
         {/* Divider */}
         <Divider />
-
         {/* Album Art for Next Release */}
         <div className="mt-8">
-          <Image
-            src="https://storage.googleapis.com/spracto-net-images/UpcomingRelease/top%20back.png"
-            alt="Album Art for Next Release"
-            className="mx-auto rounded-lg p-4 sm:p-8"
-          />
+          <h1 className="text-4xl mb-4">Upcoming Release</h1>
+          <div
+            className="relative overflow-hidden mx-auto rounded-lg p-4 sm:p-8"
+            style={{ paddingTop: "96.25%" }}
+          >
+            <Image
+              src="https://storage.googleapis.com/spracto-net-images/UpcomingRelease/top%20back.png"
+              alt="Album Art for Next Release"
+              layout="fill"
+              objectFit="cover"
+              className="w-full h-full"
+            />
+          </div>
         </div>
+        Available for free download August 1st, 2024
       </div>
     </div>
   );
