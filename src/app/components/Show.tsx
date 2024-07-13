@@ -8,6 +8,10 @@ const Show: React.FC = () => {
         src="https://storage.googleapis.com/spracto-net-images/UpcomingShow/juush.JPG"
         alt="Upcoming Show!"
         className="mx-auto mb-4 rounded-3xl max-w-full sm:max-w-xxl"
+        height="300"
+        width="300"
+        // layout="fill"
+        // objectFit="contain"
       />
       <a>
         <button
