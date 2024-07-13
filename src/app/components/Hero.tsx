@@ -15,7 +15,13 @@ const Hero: React.FC = () => {
       </video>
       <div className="absolute inset-0 bg-black opacity-25"></div>
       <div className="relative flex items-center justify-center h-full">
-        <Image src="/logo-black.png" alt="My Logo" className="h-48 w-auto" />
+        <Image
+          src="/logo-black.png"
+          alt="My Logo"
+          className="h-48 w-auto"
+          height="300"
+          width="300"
+        />
       </div>
     </div>
   );
