@@ -59,7 +59,13 @@ const Header: React.FC = () => {
       >
         <div className="flex items-center">
           <Link href="/">
-            <Image src="/logo.png" alt="My Logo" className="h-12 w-auto" />
+            <Image
+              src="/logo.png"
+              alt="My Logo"
+              className="h-12 w-auto"
+              width="300"
+              height="300"
+            />
           </Link>
         </div>
         <div className="hidden md:flex space-x-4">
@@ -93,7 +99,13 @@ const Header: React.FC = () => {
       >
         <div className="absolute top-4 left-4">
           <Link href="/">
-            <Image src="/logo.png" alt="My Logo" className="h-12 w-auto" />
+            <Image
+              src="/logo.png"
+              alt="My Logo"
+              className="h-12 w-auto"
+              width="300"
+              height="300"
+            />
           </Link>
         </div>
         <button
