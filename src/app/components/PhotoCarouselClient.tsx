@@ -1,8 +1,10 @@
 // components/PhotoCarouselClient.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useSwipeable } from "react-swipeable";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface ImageData {
   src: string;
@@ -30,9 +32,22 @@ const PhotoCarouselClient: React.FC<PhotoCarouselClientProps> = ({
     );
   };
 
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: handleNext,
+    onSwipedRight: handlePrev,
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+
   return (
-    <div className="relative w-full max-w-4xl mx-auto">
-      <div className="relative w-full h-64 sm:h-96">
+    <div className="relative w-full max-w-6xl mx-auto" {...swipeHandlers}>
+      <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
         {images.map((image, index) => (
           <div
             key={index}
@@ -44,7 +59,7 @@ const PhotoCarouselClient: React.FC<PhotoCarouselClientProps> = ({
               src={image.src}
               alt={image.alt}
               layout="fill"
-              objectFit="cover"
+              objectFit="contain"
               className="w-full h-full"
             />
           </div>
@@ -54,13 +69,13 @@ const PhotoCarouselClient: React.FC<PhotoCarouselClientProps> = ({
         onClick={handlePrev}
         className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 bg-gray-800 bg-opacity-50 text-white"
       >
-        Prev
+        <FaArrowLeft />
       </button>
       <button
         onClick={handleNext}
         className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 bg-gray-800 bg-opacity-50 text-white"
       >
-        Next
+        <FaArrowRight />
       </button>
     </div>
   );
