@@ -2,6 +2,7 @@ import React from "react";
 import Divider from "./Divider";
 import Image from "next/image";
 import { Archivo_Black } from "next/font/google";
+import { FaSoundcloud, FaYoutube } from "react-icons/fa";
 
 const play = Archivo_Black({
   weight: "400",
@@ -15,7 +16,7 @@ const Releases: React.FC = () => {
       {/* Wrapper for centered content */}
       <div className="max-w-3xl mx-auto">
         {/* SoundCloud Iframe */}
-        <h2 className={`${play.className} text-3xl mb-4`}>Featured Track:</h2>
+        <h2 className={`${play.className} text-3xl mb-4`}>Featured Track of the month</h2>
         <div className="">
           <div
             className="relative overflow-hidden"
@@ -45,7 +46,7 @@ const Releases: React.FC = () => {
           >
             <button className="bg-white text-black mt-4 py-2 px-4 text-xl font-mono hover:bg-gray-200 rounded-3xl">
               <a
-                href="https://soundcloud.com/spracto/boom"
+                href="https://hypeddit.com/spracto/boom-extended"
                 title="Boom"
                 target="_blank"
               >
@@ -55,10 +56,12 @@ const Releases: React.FC = () => {
           </div>
         </div>
         {/* Divider */}
-        <Divider />
+
         {/* Album Art for Next Release */}
         <div className="mt-8">
-          <h1 className="text-4xl mb-4">Upcoming Release</h1>
+          <h1 className={`${play.className} text-4xl mb-4`}>
+            Upcoming Release
+          </h1>
           <div
             className="relative overflow-hidden mx-auto rounded-lg p-4 sm:p-8"
             style={{ paddingTop: "96.25%" }}
@@ -71,8 +74,36 @@ const Releases: React.FC = () => {
               className="w-full h-full"
             />
           </div>
+          <p className={`${play.className} mt-5`}>
+            Available for free download August 1st, 2024
+          </p>
         </div>
-        Available for free download August 1st, 2024
+        {/* New Header and Buttons */}
+        <div className="mt-8">
+          <h2 className={`${play.className} text-xl mb-4`}>
+            Stream and Download My Tracks:
+          </h2>
+          <div className="flex justify-center space-x-4">
+            <a
+              href="https://soundcloud.com/spracto"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center bg-gray-300 text-black py-2 px-4 rounded-lg hover:bg-gray-400"
+            >
+              <FaSoundcloud className="mr-2" />
+              SoundCloud
+            </a>
+            <a
+              href="https://www.youtube.com/@spracto"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center bg-gray-300 text-black py-2 px-4 rounded-lg hover:bg-gray-400"
+            >
+              <FaYoutube className="mr-2" />
+              YouTube
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
