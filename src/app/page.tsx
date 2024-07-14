@@ -11,12 +11,12 @@ export default function Home() {
     <>
       <Header />
       <Hero />
-      <About />
+      {/* <About /> */}
       <Divider />
       {/* <Show /> */}
       {/* <Divider /> */}
       <Releases />
-      <Divider />
+
       <PhotoCarouselServer />
       <Footer />
     </>
