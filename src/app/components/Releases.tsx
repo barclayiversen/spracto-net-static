@@ -1,8 +1,10 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Divider from "./Divider";
-import Image from "next/image";
 import { Archivo_Black } from "next/font/google";
 import { FaSoundcloud, FaYoutube } from "react-icons/fa";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const play = Archivo_Black({
   weight: "400",
@@ -11,79 +13,112 @@ const play = Archivo_Black({
 });
 
 const Releases: React.FC = () => {
-  return (
-    <div className="text-center p-4">
-      {/* Wrapper for centered content */}
-      <div className="max-w-3xl mx-auto">
-        {/* SoundCloud Iframe */}
-        <h2 className={`${play.className} text-3xl mb-4`}>Featured Track of the month</h2>
-        <div className="">
-          <div
-            className="relative overflow-hidden"
-            style={{ paddingTop: "96.25%" }}
-          >
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              scrolling="no"
-              frameBorder="no"
-              allow="autoplay"
-              src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1732888257&color=%235bff00&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
-            ></iframe>
-          </div>
-          <div
-            style={{
-              fontSize: "10px",
-              color: "#cccccc",
-              lineBreak: "anywhere",
-              wordBreak: "normal",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              fontFamily:
-                "Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif",
-              fontWeight: 100,
-            }}
-          >
-            <button className="bg-white text-black mt-4 py-2 px-4 text-xl font-mono hover:bg-gray-200 rounded-3xl">
-              <a
-                href="https://hypeddit.com/spracto/boom-extended"
-                title="Boom"
-                target="_blank"
-              >
-                Free Download
-              </a>
-            </button>
-          </div>
-        </div>
-        {/* Divider */}
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: false,
+    threshold: 0.9, // Adjust this value for more scrolling
+  });
 
-        {/* Album Art for Next Release */}
-        <div className="mt-8">
-          <h1 className={`${play.className} text-4xl mb-4`}>
-            Upcoming Release
-          </h1>
+  const hypeControls = useAnimation();
+  const [hypeRef, hypeInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.9, // Adjust this value for more scrolling
+  });
+
+  const droppingControls = useAnimation();
+  const [droppingRef, droppingInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.9,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    } else {
+      controls.start("hidden");
+    }
+  }, [controls, inView]);
+
+  useEffect(() => {
+    if (hypeInView) {
+      hypeControls.start("visible");
+    } else {
+      hypeControls.start("hidden");
+    }
+  }, [hypeControls, hypeInView]);
+
+  useEffect(() => {
+    if (droppingInView) {
+      droppingControls.start("visible");
+    } else {
+      droppingControls.start("hidden");
+    }
+  }, [droppingControls, droppingInView]);
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -50 }, // Animation for exiting
+  };
+
+  const hypeVariants = {
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0 },
+  };
+
+  const droppingVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  return (
+    <div className="text-center pt-4" id="outer-div">
+      {/* Wrapper for centered content */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 w-full gap-4">
+        {/* New Music Text */}
+        <div
+          className="relative flex items-center justify-center h-96"
+          id="new-music-div"
+          ref={ref}
+        >
           <div
-            className="relative overflow-hidden mx-auto rounded-lg p-4 sm:p-8"
-            style={{ paddingTop: "96.25%" }}
+            id="new-music-inner-div"
+            className="absolute top-0 left-0 w-full h-full bg-black bg-transparent bg-cover bg-center"
+            style={{
+              backgroundImage: "url(/images/top-back.png)",
+              opacity: "0.25",
+              zIndex: "-1",
+            }}
+          ></div>
+          <motion.h2
+            className={`${play.className} text-3xl text-white`}
+            variants={textVariants}
+            initial="hidden"
+            animate={controls}
+            exit="exit"
+            transition={{ duration: 3 }}
           >
-            <Image
-              src="https://storage.googleapis.com/spracto-net-images/UpcomingRelease/top%20back.png"
-              alt="Album Art for Next Release"
-              layout="fill"
-              objectFit="cover"
-              className="w-full h-full"
-            />
-          </div>
-          <p className={`${play.className} mt-5`}>
-            Available for free download August 1st, 2024
-          </p>
+            New Music Every Month
+          </motion.h2>
         </div>
-        {/* New Header and Buttons */}
-        <div className="mt-8">
-          <h2 className={`${play.className} text-xl mb-4`}>
-            Stream and Download My Tracks:
-          </h2>
-          <div className="flex justify-center space-x-4">
+
+        {/* SoundCloud Iframe */}
+        <div
+          className="relative flex items-center justify-center h-96"
+          id="soundcloud-div"
+        >
+          <div
+            className="absolute top-0 left-0 w-full h-full"
+            style={{
+              backgroundImage: "url(/images/spracto-double-1015.png)",
+              backgroundSize: "contain",
+              backgroundPosition: "center",
+              opacity: "0.15",
+              zIndex: "-1",
+            }}
+          ></div>
+          <h2 className={`${play.className} text-3xl text-white`}>
+            Listen on{" "}
             <a
               href="https://soundcloud.com/spracto"
               target="_blank"
@@ -93,16 +128,69 @@ const Releases: React.FC = () => {
               <FaSoundcloud className="mr-2" />
               SoundCloud
             </a>
-            <a
-              href="https://www.youtube.com/@spracto"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center bg-gray-300 text-black py-2 px-4 rounded-lg hover:bg-gray-400"
+          </h2>
+        </div>
+
+        {/* Money Image Box */}
+        <div
+          className="relative flex items-center justify-center h-96 order-1 lg:order-2"
+          id="money-image-div"
+          ref={droppingRef}
+        >
+          <div
+            className="absolute top-0 left-0 w-full h-full"
+            style={{
+              backgroundImage: "url(/images/money.png)",
+              backgroundSize: "contain",
+              backgroundPosition: "center",
+              opacity: "0.5",
+              zIndex: "-1",
+            }}
+          ></div>
+          <motion.h1
+            className={`${play.className} text-4xl text-white`}
+            variants={droppingVariants}
+            initial="hidden"
+            animate={droppingControls}
+            transition={{ duration: 1 }}
+          >
+            Dropping Next Month!
+          </motion.h1>
+        </div>
+
+        {/* Email Subscription Box */}
+        <div
+          className="relative flex flex-col items-center justify-center h-96 bg-black order-2 lg:order-1"
+          id="email-subscription-div"
+          ref={hypeRef}
+        >
+          <motion.h1
+            className={`${play.className} text-4xl mb-4 text-white`}
+            variants={hypeVariants}
+            initial="hidden"
+            animate={hypeControls}
+            transition={{ duration: 1 }}
+          >
+            Hyped for my next release? Get it before everyone else
+          </motion.h1>
+          <form className="flex flex-col items-center">
+            {/* <input
+              disabled
+              type="email"
+              placeholder="Early Access Email list coming soon!"
+              className="py-2 px-4 rounded-lg mb-2 text-black"
+            />
+            <button
+              disabled
+              type="submit"
+              className="bg-gray-300 text-black py-2 px-4 rounded-lg hover:bg-gray-400"
             >
-              <FaYoutube className="mr-2" />
-              YouTube
-            </a>
-          </div>
+              Subscribe
+            </button> */}
+            <p className={`${play.className}  mb-4 text-white`}>
+              Early Access Email list coming soon!
+            </p>
+          </form>
         </div>
       </div>
     </div>

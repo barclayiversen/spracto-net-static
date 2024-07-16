@@ -9,6 +9,7 @@ const Hero: React.FC = () => {
         loop
         muted
         className="absolute w-full h-full object-cover"
+        playsInline
       >
         <source src="/bgvideo.mp4" type="video/mp4" />
         Your browser does not support the video tag.

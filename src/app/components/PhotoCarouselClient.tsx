@@ -46,7 +46,7 @@ const PhotoCarouselClient: React.FC<PhotoCarouselClientProps> = ({
   }, [currentIndex]);
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto" {...swipeHandlers}>
+    <div className="relative w-full  mx-auto" {...swipeHandlers}>
       <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
         {images.map((image, index) => (
           <div
@@ -60,7 +60,7 @@ const PhotoCarouselClient: React.FC<PhotoCarouselClientProps> = ({
               alt={image.alt}
               layout="fill"
               objectFit="contain"
-              className="w-full h-full"
+              className="w-full h-full "
             />
           </div>
         ))}
