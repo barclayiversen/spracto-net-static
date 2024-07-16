@@ -9,9 +9,24 @@ const play = Archivo_Black({
   display: "swap",
 });
 
-const InstagramPosts = ({ posts }) => {
+interface InstagramPost {
+  id: string;
+  caption: string;
+  media_url: string;
+  media_type: string;
+  thumbnail_url?: string;
+  permalink: string;
+  like_count?: number;
+  comments_count?: number;
+}
+
+interface InstagramPostsProps {
+  posts: InstagramPost[];
+}
+
+const InstagramPosts: React.FC<InstagramPostsProps> = ({ posts }) => {
   const controls = useAnimation();
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -37,8 +52,6 @@ const InstagramPosts = ({ posts }) => {
       }
     };
   }, [controls]);
-
-  posts = posts["props"]["posts"];
 
   return (
     <div className="bg-black text-white p-8" ref={ref}>
@@ -80,39 +93,9 @@ const InstagramPosts = ({ posts }) => {
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4">
                   <div className="flex items-center space-x-2">
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 15l7-7 7 7"
-                      />
-                    </svg> */}
                     <p className="text-white">{post.like_count}</p>
                   </div>
-                  <div className="flex items-center space-x-2 mt-2">
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M7 8h10M7 12h6"
-                      />
-                    </svg> */}
-                    {/* <p className="text-white">{post.comments_count}</p> */}
-                  </div>
+                  <div className="flex items-center space-x-2 mt-2"></div>
                   <p className="text-white text-center mt-4">{post.caption}</p>
                 </div>
               </a>

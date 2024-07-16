@@ -1,3 +1,5 @@
+// src/app/page.tsx
+
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Divider from "./components/Divider";
@@ -8,21 +10,18 @@ import Footer from "./components/Footer";
 import PhotoCarouselServer from "./components/PhotoLoader";
 import InstagramPosts from "./components/InstagramPosts";
 
-export async function getPosts() {
+// Define a function to fetch the posts
+async function fetchInstagramPosts() {
   const res = await fetch(
     `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,thumbnail_url,permalink&access_token=${process.env.IG_ACCESS_TOKEN}`
   );
   const data = await res.json();
-
-  return {
-    props: {
-      posts: data.data,
-    },
-  };
+  return data.data;
 }
 
 const Home = async () => {
-  const posts = await getPosts();
+  const posts = await fetchInstagramPosts();
+
   return (
     <>
       <Header />
