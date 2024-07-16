@@ -10,7 +10,7 @@ import InstagramPosts from "./components/InstagramPosts";
 
 export async function getPosts() {
   const res = await fetch(
-    `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,thumbnail_url,permalink&access_token=${process.env.NEXT_PUBLIC_IG_ACCESS_TOKEN}`
+    `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,thumbnail_url,permalink&access_token=${process.env.IG_ACCESS_TOKEN}`
   );
   const data = await res.json();
 
