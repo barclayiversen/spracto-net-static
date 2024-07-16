@@ -8,10 +8,21 @@ const play = Archivo_Black({
 
 const About: React.FC = () => {
   return (
-    <div className="text-center text-white py-8">
-      <p className={`${play.className} mt-10 text-3xl`}>
-        &quot;Just a bro tryin&apos; to be a guy, man!&quot;
-      </p>
+    <div className="relative h-96">
+      <div
+        className="absolute inset-0 flex items-center justify-center"
+        style={{
+          backgroundImage: "url(/images/spracto-triplet-midway.png)",
+          backgroundSize: "cover",
+          backgroundPosition: "10% 20%",
+          opacity: ".3",
+        }}
+      ></div>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <p className={`${play.className} text-3xl text-center`}>
+          &quot;Just a bro tryin&apos; to be a guy, man!&quot;
+        </p>
+      </div>
     </div>
   );
 };
