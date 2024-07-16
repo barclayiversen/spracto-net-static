@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { Archivo_Black } from "next/font/google";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 const play = Archivo_Black({
   weight: "400",
@@ -27,6 +28,8 @@ interface InstagramPostsProps {
 const InstagramPosts: React.FC<InstagramPostsProps> = ({ posts }) => {
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -53,8 +56,24 @@ const InstagramPosts: React.FC<InstagramPostsProps> = ({ posts }) => {
     };
   }, [controls]);
 
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 355, behavior: "smooth" });
+      setShowLeftArrow(true);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -355, behavior: "smooth" });
+      if (scrollRef.current.scrollLeft === 0) {
+        setShowLeftArrow(false);
+      }
+    }
+  };
+
   return (
-    <div className="bg-black text-white p-8" ref={ref}>
+    <div className="relative bg-black text-white p-8" ref={ref}>
       <motion.h2
         className={`${play.className} text-3xl text-white mb-4 text-center mx-auto`}
         initial="hidden"
@@ -68,7 +87,7 @@ const InstagramPosts: React.FC<InstagramPostsProps> = ({ posts }) => {
       >
         Follow Me on Instagram
       </motion.h2>
-      <div className="overflow-x-auto overflow-y-hidden">
+      <div className="overflow-x-auto overflow-y-hidden" ref={scrollRef}>
         <div className="flex space-x-4">
           {posts.map((post) => (
             <div key={post.id} className="flex flex-col space-y-4">
@@ -103,6 +122,22 @@ const InstagramPosts: React.FC<InstagramPostsProps> = ({ posts }) => {
           ))}
         </div>
       </div>
+      <button
+        // className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 bg-gray-800 bg-opacity-50 text-white rounded-full"
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 bg-gray-800 bg-opacity-50 text-white"
+        onClick={scrollRight}
+      >
+        <FaArrowRight className="text-white " />
+      </button>
+      {showLeftArrow && (
+        <button
+          // className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 bg-gray-800 bg-opacity-50 text-white rounded-full"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 bg-gray-800 bg-opacity-50 text-white"
+          onClick={scrollLeft}
+        >
+          <FaArrowLeft className="text-white " />
+        </button>
+      )}
     </div>
   );
 };
