@@ -11,11 +11,28 @@ import InstagramPosts from "./components/InstagramPosts";
 // function to fetch insta posts
 async function fetchInstagramPosts() {
   const res = await fetch(
-    `https://graph.instagram.com/me/media?fields=id,caption,media_url,media_type,thumbnail_url,permalink&access_token=${process.env.IG_ACCESS_TOKEN}`
+    `https://graph.facebook.com/v21.0/${process.env.IG_USER_ID}/media?fields=id,caption,media_url,media_type,permalink,thumbnail_url&access_token=${process.env.PAGE_ACCESS_TOKEN}`
   );
   const data = await res.json();
-  return data.data;
+
+  // For carousels, fetch children
+  const posts = await Promise.all(
+    (data.data || []).map(async (post: any) => {
+      if (post.media_type === "CAROUSEL_ALBUM") {
+        const childRes = await fetch(
+          `https://graph.facebook.com/v21.0/${post.id}/children?fields=id,media_type,media_url,thumbnail_url,permalink&access_token=${process.env.PAGE_ACCESS_TOKEN}`
+        );
+        const childData = await childRes.json();
+        return { ...post, children: childData.data || [] };
+      }
+      return post;
+    })
+  );
+
+  return posts;
 }
+
+
 
 const Home = async () => {
   const posts = await fetchInstagramPosts();
@@ -26,7 +43,7 @@ const Home = async () => {
       <Hero />
       <Releases />
       <InstagramPosts posts={posts} />
-      <PhotoCarouselServer />
+      {/* <PhotoCarouselServer /> */}
 
       <Footer />
       <About />

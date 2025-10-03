@@ -19,6 +19,7 @@ interface InstagramPost {
   permalink: string;
   like_count?: number;
   comments_count?: number;
+  children?: InstagramPost[]; // added for carousels
 }
 
 interface InstagramPostsProps {
@@ -89,37 +90,71 @@ const InstagramPosts: React.FC<InstagramPostsProps> = ({ posts }) => {
       </motion.h2>
       <div className="overflow-x-auto overflow-y-hidden" ref={scrollRef}>
         <div className="flex space-x-4">
-          {posts.map((post) => (
-            <div key={post.id} className="flex flex-col space-y-4">
-              <a
-                href={post.permalink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative block group"
-                style={{
-                  height: "calc(50vh - 2rem)", // Half of the viewport height minus padding
-                  width: "calc(50vh - 2rem)", // Keep the aspect ratio
-                }}
-              >
-                <img
-                  src={
-                    post.media_type === "VIDEO"
-                      ? post.thumbnail_url
-                      : post.media_url
-                  }
-                  alt={post.caption}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4">
-                  <div className="flex items-center space-x-2">
-                    <p className="text-white">{post.like_count}</p>
-                  </div>
-                  <div className="flex items-center space-x-2 mt-2"></div>
-                  <p className="text-white text-center mt-4">{post.caption}</p>
-                </div>
-              </a>
-            </div>
-          ))}
+
+          {posts.map((post) => {
+            let isVideo = post.media_type === "VIDEO";
+            let videoUrl: string | undefined;
+            let thumbUrl: string | undefined;
+
+            if (post.media_type === "CAROUSEL_ALBUM" && post.children?.length) {
+              const firstVideo = post.children.find((child) => child.media_type === "VIDEO");
+              if (firstVideo) {
+                isVideo = true;
+                videoUrl = firstVideo.media_url;
+                thumbUrl = firstVideo.thumbnail_url;
+              } else {
+                // fallback to first child image
+                videoUrl = post.children[0].media_url;
+                thumbUrl = post.children[0].thumbnail_url;
+              }
+            }
+
+            return (
+              <div key={post.id} className="flex flex-col space-y-4">
+                <a
+                  href={post.permalink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative block group"
+                  style={{
+                    height: "calc(50vh - 2rem)",
+                    width: "calc(50vh - 2rem)",
+                  }}
+                >
+                  {isVideo ? (
+                    <video
+                      src={videoUrl || post.media_url}
+                      poster={thumbUrl || post.thumbnail_url}
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                      onMouseEnter={(e) => e.currentTarget.play()}
+                      onMouseLeave={(e) => e.currentTarget.pause()}
+                    />
+                  ) : (
+                    <>
+                      <img
+                        src={post.media_url}
+                        alt={post.caption}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4">
+                        <div className="flex items-center space-x-2">
+                          <p className="text-white">{post.like_count}</p>
+                        </div>
+                        <p className="text-white text-center mt-4">{post.caption}</p>
+                      </div>
+                    </>
+                  )}
+                </a>
+              </div>
+            );
+          })}
+
+
+
+
         </div>
       </div>
       <button
